@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Standard Meta -->
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <!-- Site Properties -->
+  <title>PhonePe SDK Tester</title>
+  <link rel="stylesheet" type="text/css" href="./assets/semantic.css">
+
+  <script src="./assets/jquery.min.js"></script>
+  <script src="./assets/iframe.js"></script>
+
+  <style type="text/css">
+    body > .ui.container {
+      margin-top: 3em;
+    }
+    iframe {
+      border: none;
+      width: calc(100% + 2em);
+      margin: 0em -1em;
+      height: 300px;
+    }
+    iframe html {
+      overflow: hidden;
+    }
+    iframe body {
+      padding: 0em;
+    }
+
+    .ui.container > h1 {
+      font-size: 3em;
+      text-align: center;
+      font-weight: normal;
+    }
+    .ui.container > h2.dividing.header {
+      font-size: 2em;
+      font-weight: normal;
+      margin: 4em 0em 3em;
+    }
+
+
+    .ui.table {
+      table-layout: fixed;
+    }
+  </style>
+</head>
+<body>
+
+<div class="ui container">
+
+  <h1>SDK Testing</h1>
+
+  
+  
+  
+  <h3 class="ui dividing header">Preferences Bridge</h2>
+  <iframe src="./prefs.html" width="100%" scrolling="no" id="iFrameResizer4" ></iframe>
+  
+  <h3 class="ui dividing header">Location Bridge</h2>
+  <iframe src="./location.html" width="100%" scrolling="no" id="iFrameResizer4"></iframe>
+  
+  <h3 class="ui dividing header">File Bridge</h2>
+  <iframe src="./file.html" width="100%" scrolling="no" id="iFrameResizer2" style="overflow: hidden; height: 701px;"></iframe>
+
+
+  <!-- <h2 class="ui dividing header">Card</h2>
+  <iframe src="./assets/card.html" width="100%" scrolling="no" id="iFrameResizer5" style="overflow: hidden; height: 1126px;"></iframe> -->
+
+
+
+</div>
+
+
+<script>
+$('iframe').iFrameResize({
+  autoResize: true,
+  checkOrigin: false,
+  heightCalculationMethod: 'bodyScroll'
+});
+</script>
+
+
+
+</body></html>
