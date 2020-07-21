@@ -145,6 +145,59 @@
           }
         });
 
+        $('#watchlocationbtn').on("click", function () {
+          $("#watchlocationvalue").val("Started")
+          startUpdatingLocation()
+        })
+
+        $('#clearlocationbtn').on("click", function () {
+          stopUpdatingLocation()
+          $("#watchlocationvalue").val("Cleared")
+        })
+
+        
+
+
+        function startUpdatingLocation() {
+            PhonePe.PhonePe.build(PhonePe.Constants.Species.web, this.currentOS()).then((sdk) => {
+                let res = sdk.isMethodSupported('startUpdatingLocation')
+                console.log('startUpdatingLocation method supported = ' + res)
+                sdk.startUpdatingLocation()
+            })
+
+        }
+
+        function stopUpdatingLocation() {
+            PhonePe.PhonePe.build(PhonePe.Constants.Species.web, this.currentOS()).then((sdk) => {
+                let res = sdk.isMethodSupported('stopUpdatingLocation')
+                console.log('stopUpdatingLocation method supported = ' + res)
+                sdk.stopUpdatingLocation()
+            })
+
+        }
+
+        function registerLocationUpdateSuccessCallback() {
+            PhonePe.PhonePe.build(PhonePe.Constants.Species.web, this.currentOS()).then((sdk) => {
+
+                sdk.registerLocationUpdateSuccessCallback('callbackName', (location) => {
+
+
+                    $("#watchlocationvalue").val(location.latitude + ", " + location.longitude) 
+                    
+                })
+            })
+
+        }
+
+        function registerLocationUpdateFailureCallback() {
+            PhonePe.PhonePe.build(PhonePe.Constants.Species.web, this.currentOS()).then((sdk) => {
+                sdk.registerLocationUpdateFailureCallback('callbackName', (response) => {
+                  $("#watchlocationvalue").val("Error") 
+                })
+            })
+
+        }
+
       });
 
 
@@ -229,14 +282,14 @@
             </div>
             <div class="ui divider"></div>
 
-            <div id="watchlocation" class="ui action fluid icon input">
+            <div  class="ui action fluid icon input">
               <input id="watchlocationvalue" type="text" disabled placeholder="Latitude / Longitude">
-              <div class="ui teal button">Watch Location</div>
+              <div id="watchlocationbtn" class="ui teal button">Watch Location</div>
             </div>
 
             <div class="ui divider"></div>
 
-            <button class="ui negative button">Clear watch</button>
+            <button id="clearwatchbtn" class="ui negative button">Clear watch</button>
             <div class="ui divider"></div>
 
             <div id="locmessage" class="ui warning message">
