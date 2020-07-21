@@ -47,14 +47,58 @@
   <!--- Example Javascript -->
   <script>
   $(document)
-    .ready(function() {
-      $('.ui.dropdown')
-        .dropdown({
-          on: 'click'
-        })
-      ;
-    })
-  ;
+  PhonePe.PhonePe.build(PhonePe.Constants.Species.web).then((sdk) => { window.sdk = sdk })
+    $(document)
+      .ready(function () {
+
+        $('#seekpremissionbtn').on("click", function () {
+          try {
+            let res = sdk.isMethodSupported('seekPermission')
+            console.log('seekPermission method supported = ' + res)
+
+            sdk.seekPermission([location]).then((data) => {
+              $("#prefmessage").text(data)
+                })
+          } catch(e) {
+            $("#prefmessage").text(e.message)
+          }
+        });
+
+        $('#getcurrentlocation').on("click", function () {
+          
+          try {
+
+            let res = sdk.isMethodSupported('getCurrentLocation')
+                console.log('getCurrentLocation method supported = ' + res)
+
+                sdk.getCurrentLocation().then((location) => {
+                    console.log("location received on js side = " + location)
+                }).catch((err) => {
+                    console.log("Error found when fetching location = " + err)
+                })
+            
+          } catch(e) {
+            $("#prefmessage").text(e.message)
+          }
+        });
+
+        $('#removeitembtn').on("click", function () {
+          console.log($("#removeitemkey").val());
+
+
+          try {
+            let key = $("#removeitemkey").val()
+            let res = sdk.isMethodSupported('removeItem')
+            console.log('removeItem method supported = ' + res)
+
+            sdk.setItem('test', key, val)
+            $("#prefmessage").text("Remove item Done for Key:" + key)
+          } catch(e) {
+            $("#prefmessage").text(e.message)
+          }
+        });
+
+      });
   </script>
 </head>
 
@@ -63,15 +107,15 @@
 <div class="ui one column center aligned stackable grid">
   <div class="column">
 
-    <div id="seekpremission" class="ui action left">
-      <div class="ui teal button">Seek Location permission</div>
+    <div class="ui action left">
+      <div id="seekpremissionbtn" class="ui teal button">Seek Location permission</div>
     </div>
 
     <div class="ui divider"></div>
 
-    <div id="getcurrentlocation" class="ui action fluid icon input">
+    <div  class="ui action fluid icon input">
       <input id="currentlocationvalue" type="text" disabled placeholder="Latitude / Longitude">
-      <div class="ui teal button">Get Location</div>
+      <div id="getcurrentlocation" class="ui teal button">Get Location</div>
     </div>
     <div class="ui divider"></div>
 
@@ -84,6 +128,10 @@
 
     <button class="ui negative button">Clear watch</button>
     <div class="ui divider"></div>
+
+      <div id="prefmessage" class="ui warning message">
+        Logs come here
+      </div>
   </div>
 </div>
 

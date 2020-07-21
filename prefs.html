@@ -33,7 +33,7 @@
   <script type="text/javascript" src="./assets/dropdown.js"></script>
   <script type="text/javascript" src="./assets/transition.js"></script>
 
-  <script src="./bundle.js"></script>
+  
   <!--- Show Names -->
   <script src="./assets/show-examples.js"></script>
 
@@ -49,115 +49,12 @@
   </style>
 
   <!--- Example Javascript -->
-  <script>
-    PhonePe.PhonePe.build(PhonePe.Constants.Species.web).then((sdk) => { window.sdk = sdk })
-    $(document)
-      .ready(function () {
-
-        $('#getitembtn').on("click", function () {
-          try {
-            let key = $("#getitemkey").val()
-            let res = sdk.isMethodSupported('getItem')
-            console.log('getItem method supported = ' + res)
-
-            sdk.getItem('test', key, null).then((data) => {
-              $("#getitemvalue").val(data)
-            }).catch((err) => {
-              $("#getitemvalue").val(data)
-            })
-          } catch(e) {
-            $("#prefmessage").text(e.message)
-          }
-        });
-
-        $('#setitembtn').on("click", function () {
-          console.log($("#setitemvalue").text());
-          console.log($("#setitemkey").val());
-
-
-          try {
-            let key = $("#setitemkey").val()
-            let val = $("#setitemvalue").text()
-            let res = sdk.isMethodSupported('setItem')
-            console.log('setItem method supported = ' + res)
-
-            sdk.setItem('test', key, val)
-            $("#prefmessage").text("Set item Done")
-          } catch(e) {
-            $("#prefmessage").text(e.message)
-          }
-        });
-
-        $('#removeitembtn').on("click", function () {
-          console.log($("#removeitemkey").val());
-
-
-          try {
-            let key = $("#removeitemkey").val()
-            let res = sdk.isMethodSupported('removeItem')
-            console.log('removeItem method supported = ' + res)
-
-            sdk.setItem('test', key, val)
-            $("#prefmessage").text("Remove item Done for Key:" + key)
-          } catch(e) {
-            $("#prefmessage").text(e.message)
-          }
-        });
-
-      });
-  </script>
+  
 </head>
 
 <body>
 
-  <div class="ui one column center aligned stackable grid">
-    <div class="column">
-
-      <div id="getitem" class="ui action fluid input ">
-        <input id="getitemvalue" type="text" disabled placeholder="Item Value...">
-        <select id="getitemkey" class="ui compact selection dropdown">
-          <option selected="" value="key1">Key 1</option>
-          <option value="key2">Key 2</option>
-          <option value="key3">Key 3</option>
-        </select>
-
-        <div id="getitembtn" class="ui teal button">Get Item</div>
-      </div>
-
-      <div class="ui divider"></div>
-
-      <div id="setitem" class="ui action fluid input">
-        <input id="setitemvalue" type="text" placeholder="Item Value...">
-        <select id="setitemkey" class="ui compact selection dropdown">
-          <option selected="" value="key1">Key 1</option>
-          <option value="key2">Key 2</option>
-          <option value="key3">Key 3</option>
-        </select>
-        <div id="setitembtn" class="ui teal button">Set Item</div>
-      </div>
-
-      <div class="ui divider"></div>
-
-      <div class="ui action input">
-        <select id="removeitemkey" class="ui compact selection dropdown">
-          <option selected="" value="key1">Key 1</option>
-          <option value="key2">Key 2</option>
-          <option value="key3">Key 3</option>
-        </select>
-        <button id="removeitembtn" class="ui negative button">Remove Item</button>
-      </div>
-      <!-- <button class="ui negative button large">Remove Item</button> -->
-      <div class="ui divider"></div>
-
-      <div id="prefmessage" class="ui warning message">
-        Logs come here
-      </div>
-
-    </div>
-  </div>
-
-
-  <div style="clear: both; display: block;"></div>
+  
 </body>
 
 </html>

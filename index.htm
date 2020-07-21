@@ -45,6 +45,67 @@
       table-layout: fixed;
     }
   </style>
+
+<script src="./bundle.js"></script>
+
+<script>
+  PhonePe.PhonePe.build(PhonePe.Constants.Species.web).then((sdk) => { window.sdk = sdk })
+  $(document)
+    .ready(function () {
+
+      $('#getitembtn').on("click", function () {
+        try {
+          let key = $("#getitemkey").val()
+          let res = sdk.isMethodSupported('getItem')
+          console.log('getItem method supported = ' + res)
+
+          sdk.getItem('test', key, null).then((data) => {
+            $("#getitemvalue").val(data)
+          }).catch((err) => {
+            $("#getitemvalue").val(data)
+          })
+        } catch(e) {
+          $("#prefmessage").text(e.message)
+        }
+      });
+
+      $('#setitembtn').on("click", function () {
+        console.log($("#setitemvalue").val());
+        console.log($("#setitemkey").val());
+
+
+        try {
+          let key = $("#setitemkey").val()
+          let val = $("#setitemvalue").val()
+          let res = sdk.isMethodSupported('setItem')
+          console.log('setItem method supported = ' + res)
+
+          sdk.setItem('test', key, val)
+          $("#prefmessage").text("Set item Done")
+        } catch(e) {
+          $("#prefmessage").text(e.message)
+        }
+      });
+
+      $('#removeitembtn').on("click", function () {
+        console.log($("#removeitemkey").val());
+
+
+        try {
+          let key = $("#removeitemkey").val()
+          let res = sdk.isMethodSupported('removeItem')
+          console.log('removeItem method supported = ' + res)
+
+          sdk.removeItem('test', key)
+          // sdk.setItem('test', key, val)
+          $("#prefmessage").text("Remove item Done for Key:" + key)
+        } catch(e) {
+          $("#prefmessage").text(e.message)
+        }
+      });
+
+    });
+</script>
 </head>
 <body>
 
@@ -56,10 +117,58 @@
   
   
   <h3 class="ui dividing header">Preferences Bridge</h2>
-  <iframe src="./prefs.html" width="100%" scrolling="no" id="iFrameResizer4" ></iframe>
+
+    <div class="ui one column center aligned stackable grid">
+      <div class="column">
+  
+        <div id="getitem" class="ui action fluid input ">
+          <input id="getitemvalue" type="text" disabled placeholder="Item Value...">
+          <select id="getitemkey" class="ui compact selection dropdown">
+            <option selected="" value="key1">Key 1</option>
+            <option value="key2">Key 2</option>
+            <option value="key3">Key 3</option>
+          </select>
+  
+          <div id="getitembtn" class="ui teal button">Get Item</div>
+        </div>
+  
+        <div class="ui divider"></div>
+  
+        <div id="setitem" class="ui action fluid input">
+          <input id="setitemvalue" type="text" placeholder="Item Value...">
+          <select id="setitemkey" class="ui compact selection dropdown">
+            <option selected="" value="key1">Key 1</option>
+            <option value="key2">Key 2</option>
+            <option value="key3">Key 3</option>
+          </select>
+          <div id="setitembtn" class="ui teal button">Set Item</div>
+        </div>
+  
+        <div class="ui divider"></div>
+  
+        <div class="ui action input">
+          <select id="removeitemkey" class="ui compact selection dropdown">
+            <option selected="" value="key1">Key 1</option>
+            <option value="key2">Key 2</option>
+            <option value="key3">Key 3</option>
+          </select>
+          <button id="removeitembtn" class="ui negative button">Remove Item</button>
+        </div>
+        <!-- <button class="ui negative button large">Remove Item</button> -->
+        <div class="ui divider"></div>
+  
+        <div id="prefmessage" class="ui warning message">
+          Logs come here
+        </div>
+  
+      </div>
+    </div>
+  
+  
+    <div style="clear: both; display: block;"></div>
   
   <h3 class="ui dividing header">Location Bridge</h2>
-  <iframe src="./location.html" width="100%" scrolling="no" id="iFrameResizer4"></iframe>
+  <!-- <iframe src="./location.html" width="100%" scrolling="no" id="iFrameResizer4"></iframe> -->
   
   
 
