@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <!-- Standard Meta -->
-  
+
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
@@ -13,28 +16,32 @@
   <script src="./assets/iframe.js"></script>
 
   <style type="text/css">
-    body > .ui.container {
+    body>.ui.container {
       margin-top: 3em;
     }
+
     iframe {
       border: none;
       width: calc(100% + 2em);
       margin: 0em -1em;
       height: 300px;
     }
+
     iframe html {
       overflow: hidden;
     }
+
     iframe body {
       padding: 0em;
     }
 
-    .ui.container > h1 {
+    .ui.container>h1 {
       font-size: 3em;
       text-align: center;
       font-weight: normal;
     }
-    .ui.container > h2.dividing.header {
+
+    .ui.container>h2.dividing.header {
       font-size: 2em;
       font-weight: normal;
       margin: 4em 0em 3em;
@@ -46,198 +53,222 @@
     }
   </style>
 
-<script src="./bundle.js"></script>
+  <script src="./bundle.js"></script>
 
-<script>
-  PhonePe.PhonePe.build(PhonePe.Constants.Species.web).then((sdk) => { window.sdk = sdk })
-  $(document)
-    .ready(function () {
+  <script>
+    PhonePe.PhonePe.build(PhonePe.Constants.Species.web).then((sdk) => { window.sdk = sdk })
+    $(document)
+      .ready(function () {
 
-      $('#getitembtn').on("click", function () {
-        try {
-          let key = $("#getitemkey").val()
-          let res = sdk.isMethodSupported('getItem')
-          console.log('getItem method supported = ' + res)
+        $('#getitembtn').on("click", function () {
+          try {
+            let key = $("#getitemkey").val()
+            let res = sdk.isMethodSupported('getItem')
+            console.log('getItem method supported = ' + res)
 
-          sdk.getItem('test', key, null).then((data) => {
-            $("#getitemvalue").val(data)
-          }).catch((err) => {
-            $("#getitemvalue").val(data)
-          })
-        } catch(e) {
-          $("#prefmessage").text(e.message)
-        }
-      });
+            sdk.getItem('test', key, null).then((data) => {
+              $("#getitemvalue").val(data)
+            }).catch((err) => {
+              $("#getitemvalue").val(data)
+            })
+          } catch (e) {
+            $("#prefmessage").text(e.message)
+          }
+        });
 
-      $('#setitembtn').on("click", function () {
-        console.log($("#setitemvalue").val());
-        console.log($("#setitemkey").val());
-
-
-        try {
-          let key = $("#setitemkey").val()
-          let val = $("#setitemvalue").val()
-          let res = sdk.isMethodSupported('setItem')
-          console.log('setItem method supported = ' + res)
-
-          sdk.setItem('test', key, val)
-          $("#prefmessage").text("Set item Done")
-        } catch(e) {
-          $("#prefmessage").text(e.message)
-        }
-      });
-
-      $('#removeitembtn').on("click", function () {
-        console.log($("#removeitemkey").val());
+        $('#setitembtn').on("click", function () {
+          console.log($("#setitemvalue").val());
+          console.log($("#setitemkey").val());
 
 
-        try {
-          let key = $("#removeitemkey").val()
-          let res = sdk.isMethodSupported('removeItem')
-          console.log('removeItem method supported = ' + res)
+          try {
+            let key = $("#setitemkey").val()
+            let val = $("#setitemvalue").val()
+            let res = sdk.isMethodSupported('setItem')
+            console.log('setItem method supported = ' + res)
 
-          sdk.removeItem('test', key)
-          // sdk.setItem('test', key, val)
-          $("#prefmessage").text("Remove item Done for Key:" + key)
-        } catch(e) {
-          $("#prefmessage").text(e.message)
-        }
-      });
+            sdk.setItem('test', key, val)
+            $("#prefmessage").text("Set item Done")
+          } catch (e) {
+            $("#prefmessage").text(e.message)
+          }
+        });
+
+        $('#removeitembtn').on("click", function () {
+          console.log($("#removeitemkey").val());
 
 
-      $('#seekpremissionbtn').on("click", function () {
+          try {
+            let key = $("#removeitemkey").val()
+            let res = sdk.isMethodSupported('removeItem')
+            console.log('removeItem method supported = ' + res)
+
+            sdk.removeItem('test', key)
+            // sdk.setItem('test', key, val)
+            $("#prefmessage").text("Remove item Done for Key:" + key)
+          } catch (e) {
+            $("#prefmessage").text(e.message)
+          }
+        });
+
+
+        $('#seekpremissionbtn').on("click", function () {
           try {
 
+            let readsms = PhonePe.Constants.Permission.READ_SMS
             let location = PhonePe.Constants.Permission.LOCATION
             let res = sdk.isMethodSupported('seekPermission')
             console.log('seekPermission method supported = ' + res)
 
-            sdk.seekPermission([location]).then((data) => {
+            sdk.seekPermission([readsms, location]).then((data) => {
               $("#locmessage").text(JSON.stringify(data))
-                })
-          } catch(e) {
+            })
+          } catch (e) {
             $("#locmessage").text(e.message)
           }
         });
 
-    });
-</script>
+        $('#getcurrentlocation').on("click", function () {
+          try {
+
+            sdk.getCurrentLocation()
+              .then((location) => { 
+                $("#currentlocationvalue").val(location.latitude + ", " + location.longitude) 
+              })
+              .catch((err) => { 
+                $("#currentlocationvalue").val("Error Fetching Location") 
+                
+              })
+        
+          } catch (e) {
+            $("#locmessage").text(e.message)
+          }
+        });
+
+      });
+
+
+
+  </script>
 </head>
+
 <body>
 
-<div class="ui container">
+  <div class="ui container">
 
-  <h1>SDK Testing</h1>
+    <h1>SDK Testing</h1>
 
-  
-  
-  
-  <h3 class="ui dividing header">Preferences Bridge</h2>
 
-    <div class="ui one column center aligned stackable grid">
-      <div class="column">
-  
-        <div id="getitem" class="ui action fluid input ">
-          <input id="getitemvalue" type="text" disabled placeholder="Item Value...">
-          <select id="getitemkey" class="ui compact selection dropdown">
-            <option selected="" value="key1">Key 1</option>
-            <option value="key2">Key 2</option>
-            <option value="key3">Key 3</option>
-          </select>
-  
-          <div id="getitembtn" class="ui teal button">Get Item</div>
-        </div>
-  
-        <div class="ui divider"></div>
-  
-        <div id="setitem" class="ui action fluid input">
-          <input id="setitemvalue" type="text" placeholder="Item Value...">
-          <select id="setitemkey" class="ui compact selection dropdown">
-            <option selected="" value="key1">Key 1</option>
-            <option value="key2">Key 2</option>
-            <option value="key3">Key 3</option>
-          </select>
-          <div id="setitembtn" class="ui teal button">Set Item</div>
-        </div>
-  
-        <div class="ui divider"></div>
-  
-        <div class="ui action input">
-          <select id="removeitemkey" class="ui compact selection dropdown">
-            <option selected="" value="key1">Key 1</option>
-            <option value="key2">Key 2</option>
-            <option value="key3">Key 3</option>
-          </select>
-          <button id="removeitembtn" class="ui negative button">Remove Item</button>
-        </div>
-        <!-- <button class="ui negative button large">Remove Item</button> -->
-        <div class="ui divider"></div>
-  
-        <div id="prefmessage" class="ui warning message">
-          Logs come here
-        </div>
-  
-      </div>
-    </div>
-  
-  
-    <div style="clear: both; display: block;"></div>
-  
-  <h3 class="ui dividing header">Location Bridge</h2>
 
-    <div class="ui one column center aligned stackable grid">
-      <div class="column">
-    
-        <div class="ui action left">
-          <div id="seekpremissionbtn" class="ui teal button">Seek Location permission</div>
-        </div>
-    
-        <div class="ui divider"></div>
-    
-        <div  class="ui action fluid icon input">
-          <input id="currentlocationvalue" type="text" disabled placeholder="Latitude / Longitude">
-          <div id="getcurrentlocation" class="ui teal button">Get Location</div>
-        </div>
-        <div class="ui divider"></div>
-    
-        <div id="watchlocation" class="ui action fluid icon input">
-          <input id="watchlocationvalue" type="text" disabled placeholder="Latitude / Longitude">
-          <div class="ui teal button">Watch Location</div>
-        </div>
-    
-        <div class="ui divider"></div>
-    
-        <button class="ui negative button">Clear watch</button>
-        <div class="ui divider"></div>
-    
-          <div id="locmessage" class="ui warning message">
+
+    <h3 class="ui dividing header">Preferences Bridge</h2>
+
+      <div class="ui one column center aligned stackable grid">
+        <div class="column">
+
+          <div id="getitem" class="ui action fluid input ">
+            <input id="getitemvalue" type="text" disabled placeholder="Item Value...">
+            <select id="getitemkey" class="ui compact selection dropdown">
+              <option selected="" value="key1">Key 1</option>
+              <option value="key2">Key 2</option>
+              <option value="key3">Key 3</option>
+            </select>
+
+            <div id="getitembtn" class="ui teal button">Get Item</div>
+          </div>
+
+          <div class="ui divider"></div>
+
+          <div id="setitem" class="ui action fluid input">
+            <input id="setitemvalue" type="text" placeholder="Item Value...">
+            <select id="setitemkey" class="ui compact selection dropdown">
+              <option selected="" value="key1">Key 1</option>
+              <option value="key2">Key 2</option>
+              <option value="key3">Key 3</option>
+            </select>
+            <div id="setitembtn" class="ui teal button">Set Item</div>
+          </div>
+
+          <div class="ui divider"></div>
+
+          <div class="ui action input">
+            <select id="removeitemkey" class="ui compact selection dropdown">
+              <option selected="" value="key1">Key 1</option>
+              <option value="key2">Key 2</option>
+              <option value="key3">Key 3</option>
+            </select>
+            <button id="removeitembtn" class="ui negative button">Remove Item</button>
+          </div>
+          <!-- <button class="ui negative button large">Remove Item</button> -->
+          <div class="ui divider"></div>
+
+          <div id="prefmessage" class="ui warning message">
             Logs come here
           </div>
-      </div>
-    </div>
-    
-    
-    <div style="clear: both; display: block;"></div>
-  <!-- <iframe src="./location.html" width="100%" scrolling="no" id="iFrameResizer4"></iframe> -->
-  
-  
 
-  <!-- <h2 class="ui dividing header">Card</h2>
+        </div>
+      </div>
+
+
+      <div style="clear: both; display: block;"></div>
+
+      <h3 class="ui dividing header">Location Bridge</h2>
+
+        <div class="ui one column center aligned stackable grid">
+          <div class="column">
+
+            <div class="ui action left">
+              <div id="seekpremissionbtn" class="ui teal button">Seek Location permission</div>
+            </div>
+
+            <div class="ui divider"></div>
+
+            <div class="ui action fluid icon input">
+              <input id="currentlocationvalue" type="text" disabled placeholder="Latitude / Longitude">
+              <div id="getcurrentlocation" class="ui teal button">Get Location</div>
+            </div>
+            <div class="ui divider"></div>
+
+            <div id="watchlocation" class="ui action fluid icon input">
+              <input id="watchlocationvalue" type="text" disabled placeholder="Latitude / Longitude">
+              <div class="ui teal button">Watch Location</div>
+            </div>
+
+            <div class="ui divider"></div>
+
+            <button class="ui negative button">Clear watch</button>
+            <div class="ui divider"></div>
+
+            <div id="locmessage" class="ui warning message">
+              Logs come here
+            </div>
+          </div>
+        </div>
+
+
+        <div style="clear: both; display: block;"></div>
+        <!-- <iframe src="./location.html" width="100%" scrolling="no" id="iFrameResizer4"></iframe> -->
+
+
+
+        <!-- <h2 class="ui dividing header">Card</h2>
   <iframe src="./assets/card.html" width="100%" scrolling="no" id="iFrameResizer5" style="overflow: hidden; height: 1126px;"></iframe> -->
 
 
 
-</div>
+  </div>
 
 
-<script>
-$('iframe').iFrameResize({
-  autoResize: true,
-  checkOrigin: false,
-  heightCalculationMethod: 'bodyScroll'
-});
-</script>
+  <script>
+    $('iframe').iFrameResize({
+      autoResize: true,
+      checkOrigin: false,
+      heightCalculationMethod: 'bodyScroll'
+    });
+  </script>
 
 
 
-</body></html>
+</body>
+
+</html>
