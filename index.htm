@@ -104,6 +104,22 @@
         }
       });
 
+
+      $('#seekpremissionbtn').on("click", function () {
+          try {
+
+            let location = PhonePe.Constants.Permission.LOCATION
+            let res = sdk.isMethodSupported('seekPermission')
+            console.log('seekPermission method supported = ' + res)
+
+            sdk.seekPermission([location]).then((data) => {
+              $("#locmessage").text(JSON.stringify(data))
+                })
+          } catch(e) {
+            $("#locmessage").text(e.message)
+          }
+        });
+
     });
 </script>
 </head>
@@ -168,6 +184,40 @@
     <div style="clear: both; display: block;"></div>
   
   <h3 class="ui dividing header">Location Bridge</h2>
+
+    <div class="ui one column center aligned stackable grid">
+      <div class="column">
+    
+        <div class="ui action left">
+          <div id="seekpremissionbtn" class="ui teal button">Seek Location permission</div>
+        </div>
+    
+        <div class="ui divider"></div>
+    
+        <div  class="ui action fluid icon input">
+          <input id="currentlocationvalue" type="text" disabled placeholder="Latitude / Longitude">
+          <div id="getcurrentlocation" class="ui teal button">Get Location</div>
+        </div>
+        <div class="ui divider"></div>
+    
+        <div id="watchlocation" class="ui action fluid icon input">
+          <input id="watchlocationvalue" type="text" disabled placeholder="Latitude / Longitude">
+          <div class="ui teal button">Watch Location</div>
+        </div>
+    
+        <div class="ui divider"></div>
+    
+        <button class="ui negative button">Clear watch</button>
+        <div class="ui divider"></div>
+    
+          <div id="locmessage" class="ui warning message">
+            Logs come here
+          </div>
+      </div>
+    </div>
+    
+    
+    <div style="clear: both; display: block;"></div>
   <!-- <iframe src="./location.html" width="100%" scrolling="no" id="iFrameResizer4"></iframe> -->
   
   
