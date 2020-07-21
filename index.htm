@@ -133,6 +133,9 @@
 
             sdk.getCurrentLocation()
               .then((location) => { 
+                if (typeof location == "string") {
+                  location = JSON.parse(location)
+                }
                 $("#currentlocationvalue").val(location.latitude + ", " + location.longitude) 
               })
               .catch((err) => { 
