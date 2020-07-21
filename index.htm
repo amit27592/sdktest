@@ -159,42 +159,37 @@
 
 
         function startUpdatingLocation() {
-            PhonePe.PhonePe.build(PhonePe.Constants.Species.web, this.currentOS()).then((sdk) => {
                 let res = sdk.isMethodSupported('startUpdatingLocation')
                 console.log('startUpdatingLocation method supported = ' + res)
                 sdk.startUpdatingLocation()
-            })
+            
 
         }
 
         function stopUpdatingLocation() {
-            PhonePe.PhonePe.build(PhonePe.Constants.Species.web, this.currentOS()).then((sdk) => {
                 let res = sdk.isMethodSupported('stopUpdatingLocation')
                 console.log('stopUpdatingLocation method supported = ' + res)
                 sdk.stopUpdatingLocation()
-            })
+            
 
         }
 
         function registerLocationUpdateSuccessCallback() {
-            PhonePe.PhonePe.build(PhonePe.Constants.Species.web, this.currentOS()).then((sdk) => {
-
+            
                 sdk.registerLocationUpdateSuccessCallback('callbackName', (location) => {
-
-
+                    location = JSON.parse(location)
                     $("#watchlocationvalue").val(location.latitude + ", " + location.longitude) 
                     
                 })
-            })
+            
 
         }
 
         function registerLocationUpdateFailureCallback() {
-            PhonePe.PhonePe.build(PhonePe.Constants.Species.web, this.currentOS()).then((sdk) => {
                 sdk.registerLocationUpdateFailureCallback('callbackName', (response) => {
                   $("#watchlocationvalue").val("Error") 
                 })
-            })
+            
 
         }
 
